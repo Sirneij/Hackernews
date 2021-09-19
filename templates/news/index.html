@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+<!--title-->
+{% block title %}{{page_title}}{% endblock title %}
+<!--content-->
+{% block content %}
+
+<!-- content -->
+<div
+  class="
+    flex flex-col
+    pt-20
+    bg-gray-200
+    mx-auto
+    min-h-screen
+    max-w-4xl
+    lg:max-w-5xl
+    xl:max-w-6xl
+  "
+>
+  <div class="grid grid-cols-1 gap-y-4">
+
+    <!-- popular posts -->
+    <div class="flex flex-col space-y-2">
+      <div class="font-2xl font-medium">Popular Posts</div>
+      <div class="flex flex-col space-y-4">
+        <!-- filter -->
+        <div
+          class="
+            flex
+            place-items-center
+            justify-between
+            border border-solid border-gray-400
+            bg-white
+            p-4
+            rounded
+            shadow
+          "
+        >
+          <div class="flex space-x-1 lg:space-x-4">
+            <div v-for="item in popularItems" :key="item.name">
+              <div
+                v-if="item.isBlue"
+                class="
+                  text-blue-500
+                  bg-gray-200
+                  rounded-full
+                  px-4
+                  py-2
+                  font-black
+                  flex
+                  place-items-center
+                  space-x-2
+                  hover:bg-gray-300
+                "
+              >
+                <div v-if="item.icon">
+                  <fa :icon="item.icon" class="text-xl" />
+                </div>
+                <div>{{ item.name }}</div>
+                <div v-if="item.caretDown">
+                  <fa icon="caret-down" />
+                </div>
+              </div>
+
+              <div
+                v-else
+                class="
+                  text-gray-500
+                  rounded-full
+                  p-2
+                  font-black
+                  space-x-2
+                  flex
+                  place-items-center
+                  hover:bg-gray-300
+                "
+              >
+                <div v-if="item.icon">
+                  <fa :icon="item.icon" class="text-xl" />
+                </div>
+                <div>{{ item.name }}</div>
+                <div v-if="item.caretDown">
+                  <fa icon="caret-down" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="
+                text-blue-500
+                bg-gray-200
+                rounded-full
+                px-4
+                py-2
+                font-black
+                flex
+                place-items-center
+                space-x-2
+                hover:bg-gray-300
+              "
+            >
+              <fa icon="columns" class="text-xl" />
+              <fa icon="caret-down" />
+            </div>
+          </div>
+        </div>
+
+        <!-- reddit posts -->
+        <div class="flex flex-col space-y-4 pb-8">
+          <div v-for="post in posts" :key="post.title">
+            <div
+              class="
+                border border-solid border-gray-400
+                bg-white
+                rounded
+                shadow
+                flex
+              "
+            >
+              <div
+                class="
+                  flex flex-col
+                  place-items-center
+                  text-2xl
+                  p-2
+                  bg-gray-100
+                  justify-center
+                "
+              >
+                <div>
+                  <fa icon="chevron-circle-up" class="text-red-500" />
+                </div>
+                <div class="text-red-500 font-bold">{{ post.upvotes }}</div>
+                <div>
+                  <fa icon="chevron-circle-down" />
+                </div>
+              </div>
+              <div class="flex flex-col pl-4">
+                <div class="flex place-items-center space-x-2">
+                  <img :src="post.image" alt="" class="w-8 rounded-full py-2" />
+                  <div class="font-bold">{{ post.subreddit }}</div>
+                  <div class="font-thin text-gray-600">
+                    Posted by u/SuboptimalEng {{ post.date }}
+                  </div>
+                </div>
+                <div class="text-2xl font-bold">{{ post.title }}</div>
+                <div class="flex text-gray-500 space-x-4">
+                  <div
+                    v-for="interaction in interactions"
+                    :key="interaction.icon"
+                    class="
+                      text-lg
+                      flex
+                      place-items-center
+                      space-x-2
+                      p-2
+                      hover:bg-gray-200
+                    "
+                  >
+                    <fa :icon="interaction.icon" />
+                    <div>{{ interaction.name }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

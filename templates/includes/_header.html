@@ -1,0 +1,157 @@
+<!-- navbar -->
+<div
+  class="
+    bg-white
+    w-full
+    fixed
+    py-2
+    px-2
+    flex
+    place-items-center
+    justify-evenly
+    space-x-2
+    shadow
+    z-10
+  "
+>
+  <!-- logo -->
+  <div class="flex text-3xl space-x-2 place-items-center">
+    <span class="bg-white text-4xl" style="color: #ff5700">
+      <i class="fab fa-hacker-news-square"></i>
+    </span>
+    <div class="font-medium hidden lg:block">Hackernews</div>
+  </div>
+
+  <!-- subreddit dropdown -->
+  <div class="relative">
+    <!-- subreddit search dropdown -->
+    <button
+      type="button"
+      class="
+        flex
+        place-items-center
+        space-x-4
+        xl:space-x-48
+        p-2
+        rounded
+        hover:bg-gray-200
+        focus:outline-none
+      "
+    >
+      <div class="flex place-items-center space-x-2">
+        <span class="text-blue-600 text-2xl">
+          <i class="fas fa-chart-line"></i>
+        </span>
+        <div class="text-xl font-medium hidden md:block">Popular</div>
+      </div>
+      <i class="fas fa-caret-down"></i>
+    </button>
+
+    <!-- reddit feeds -->
+    <div
+      class="
+        absolute
+        bg-white
+        rounded
+        py-4
+        border border-solid border-gray-200
+        w-80
+      "
+    >
+      <div>
+        <div class="px-6 py-2 text-xs font-bold text-gray-400">
+          FILER BY
+        </div>
+        <div
+          class="flex place-items-center space-x-4 px-6 py-2 hover:bg-gray-200"
+        >
+          <span class="text-blue-600 text-2xl">
+            <i class="fas fa-user"></i>
+          </span>
+          <div>Dropdown name</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- search bar -->
+  <div class="flex place-items-center bg-gray-100 rounded w-60 lg:w-80">
+    <div class="pl-4 pr-2">
+      <i class="fas fa-search"></i>
+    </div>
+    <input
+      type="text"
+      placeholder="Search"
+      class="bg-gray-100 py-2 rounded outline-none"
+    />
+  </div>
+
+  <!-- common actions -->
+  <div class="flex xl:divide-x xl:divide-gray-200">
+    <div class="hidden xl:block pr-2">
+      <div class="flex space-x-2">
+        <div class="p-2 rounded hover:bg-gray-200">
+          <span class="text-2xl"><i class="fas fa-option"></i></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex space-x-2 pl-2">
+      <div class="p-2 rounded hover:bg-gray-200">
+        <span class="text-2xl"><i class="fas fa-action"></i></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex space-x-2">
+    <!-- coins -->
+    <div
+      class="
+        flex
+        place-items-center
+        rounded-full
+        border border-solid border-yellow-300
+        px-4
+        py-2
+        space-x-2
+        bg-yellow-200
+        hover:bg-yellow-500
+      "
+    >
+      <div
+        class="
+          rounded-full
+          px-2
+          bg-yellow-500
+          border-2 border-solid border-white
+          font-black
+          text-white
+        "
+      >
+        C
+      </div>
+      <div>Free</div>
+    </div>
+
+    <!-- profile -->
+    <div
+      class="flex space-x-2 place-items-center rounded px-2 hover:bg-gray-200"
+    >
+      <img
+        src="/images/profile_pic.png"
+        alt=""
+        class="w-8 rounded flex-shrink-0"
+      />
+      <div class="text-sm font-medium hidden xl:block">
+        <div>@SuboptimalEng</div>
+        <div class="flex place-items-center space-x-1">
+          <div>
+            <fa icon="star" class="text-red-600" />
+          </div>
+          <div>1.8k karma</div>
+        </div>
+      </div>
+      <i class="fas fa-caret-down"></i>
+    </div>
+  </div>
+</div>
