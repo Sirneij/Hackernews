@@ -18,7 +18,6 @@
   "
 >
   <div class="grid grid-cols-1 gap-y-4">
-
     <!-- popular posts -->
     <div class="flex flex-col space-y-2">
       <div class="font-2xl font-medium">Popular Posts</div>
@@ -37,33 +36,9 @@
           "
         >
           <div class="flex space-x-1 lg:space-x-4">
-            <div v-for="item in popularItems" :key="item.name">
+            <!--item-->
+            <div>
               <div
-                v-if="item.isBlue"
-                class="
-                  text-blue-500
-                  bg-gray-200
-                  rounded-full
-                  px-4
-                  py-2
-                  font-black
-                  flex
-                  place-items-center
-                  space-x-2
-                  hover:bg-gray-300
-                "
-              >
-                <div v-if="item.icon">
-                  <fa :icon="item.icon" class="text-xl" />
-                </div>
-                <div>{{ item.name }}</div>
-                <div v-if="item.caretDown">
-                  <fa icon="caret-down" />
-                </div>
-              </div>
-
-              <div
-                v-else
                 class="
                   text-gray-500
                   rounded-full
@@ -75,12 +50,15 @@
                   hover:bg-gray-300
                 "
               >
-                <div v-if="item.icon">
-                  <fa :icon="item.icon" class="text-xl" />
+                <div>
+                  <i class="fas fa-user-o text-xl"></i>
                 </div>
-                <div>{{ item.name }}</div>
-                <div v-if="item.caretDown">
+                <div>Item name</div>
+                <!--<div v-if="item.caretDown">
                   <fa icon="caret-down" />
+                </div>-->
+                <div>
+                  <i class="fas fa-caret-down"></i>
                 </div>
               </div>
             </div>
@@ -108,7 +86,8 @@
 
         <!-- reddit posts -->
         <div class="flex flex-col space-y-4 pb-8">
-          <div v-for="post in posts" :key="post.title">
+          <!--post-->
+          <div>
             <div
               class="
                 border border-solid border-gray-400
@@ -129,26 +108,39 @@
                 "
               >
                 <div>
-                  <fa icon="chevron-circle-up" class="text-red-500" />
+                  <span class="text-red-500">
+                    <i class="fas fa-chevron-circle-up"></i>
+                  </span>
                 </div>
-                <div class="text-red-500 font-bold">{{ post.upvotes }}</div>
+                <div class="text-red-500 font-bold">Up votes</div>
                 <div>
-                  <fa icon="chevron-circle-down" />
+                  <i class="fas fa-chevron-circle-down"></i>
                 </div>
               </div>
               <div class="flex flex-col pl-4">
                 <div class="flex place-items-center space-x-2">
-                  <img :src="post.image" alt="" class="w-8 rounded-full py-2" />
-                  <div class="font-bold">{{ post.subreddit }}</div>
+                  <svg
+                    class="w-8 rounded-full py-2"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <!--<img src="#" alt="" class="w-8 rounded-full py-2" />-->
+                  <div class="font-bold">Comments</div>
                   <div class="font-thin text-gray-600">
-                    Posted by u/SuboptimalEng {{ post.date }}
+                    Posted by Author Date
                   </div>
                 </div>
-                <div class="text-2xl font-bold">{{ post.title }}</div>
+                <div class="text-2xl font-bold">Post title</div>
                 <div class="flex text-gray-500 space-x-4">
                   <div
-                    v-for="interaction in interactions"
-                    :key="interaction.icon"
                     class="
                       text-lg
                       flex
@@ -158,8 +150,9 @@
                       hover:bg-gray-200
                     "
                   >
-                    <fa :icon="interaction.icon" />
-                    <div>{{ interaction.name }}</div>
+                    <i class="fas fa-comment"></i>
+
+                    <div>Comments</div>
                   </div>
                 </div>
               </div>
