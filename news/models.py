@@ -1,45 +1,51 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth import get_user_model
+import uuid
 
 
-class Story(models.Model):
-    unique_api_story_id = models.CharField("Story ID from the API", max_length=10, null=True)
-    story_type = models.CharField(
-        "Type of item One of 'job, 'story', 'comment', 'poll', or 'pollopt'", max_length=15, null=True
-    )
-    author = models.CharField("Name of the author", max_length=50, null=True)
-    time = models.DateTimeField("Creation date of the item", null=True)
+class LatestStory(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    unique_api_story_id = models.CharField("Story ID", max_length=10, null=True)
+    story_type = models.CharField("Type of item", max_length=15, null=True)
+    author = models.CharField("Author", max_length=50, null=True)
+    slug = models.SlugField(max_length=2000, null=True)
+    created_by = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
+    time = models.DateTimeField("Date created", null=True)
     text = models.TextField("The comment, story or poll text.", null=True)
     dead = models.BooleanField(default=False)
-    url = models.CharField("The URL of the story.", max_length=550, null=True)
-    score = models.CharField("The story's score, or the votes for a pollopt.", max_length=10, null=True)
-    title = models.CharField("The title of the story, poll or job. HTML.", max_length=500, null=True)
+    url = models.URLField("URL", max_length=1000, null=True)
+    score = models.IntegerField("Score", null=True)
+    title = models.TextField("Title", null=True)
 
     class Meta:
-        verbose_name = "Story"
-        verbose_name_plural = "Stories"
+        unique_together = ("unique_api_story_id", "title")
+        verbose_name = "Latest story"
+        verbose_name_plural = "Latest stories"
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("news-detail", kwargs={"id": self.id})
+        return reverse("news_detail", kwargs={"id": self.id, "slug": self.slug})
 
 
 class Comment(models.Model):
-    unique_comment_api_id = models.CharField("Story ID from the API", max_length=10, null=True)
-    story = models.ForeignKey(Story, on_delete=models.CASCADE, related_name="comments")
-    author = models.CharField("Name of the author", max_length=50, null=True)
-    time = models.DateTimeField("Creation date of the item", null=True)
-    text = models.TextField("The comment, story or poll text.", null=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    unique_comment_api_id = models.CharField("Story ID", max_length=10, null=True)
+    story = models.ForeignKey(LatestStory, on_delete=models.CASCADE, related_name="comments")
+    author = models.CharField("Author", max_length=50, null=True)
+    time = models.DateTimeField("Date created", null=True)
+    text = models.TextField("Text", null=True)
     dead = models.BooleanField(default=False)
-    url = models.CharField("The URL of the story.", max_length=550, null=True)
-    score = models.CharField("The story's score, or the votes for a pollopt.", max_length=10, null=True)
-    title = models.CharField("The title of the story, poll or job. HTML.", max_length=500, null=True)
+    url = models.URLField("URL", max_length=1000, null=True)
+    score = models.IntegerField("Score", null=True)
+    title = models.TextField("Title", null=True)
 
     class Meta:
+        unique_together = ("unique_comment_api_id", "story")
         verbose_name = "Comment"
         verbose_name_plural = "Comments"
 
     def __str__(self):
-        return self.title
+        return self.story.title

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from decouple import config, Csv
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -141,3 +142,20 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 AUTH_USER_MODEL = "accounts.User"
+
+
+CELERY_BROKER_URL = config("REDIS_URL", default="redis://127.0.0.1:6379")
+
+
+CELERY_RESULT_BACKEND = config("REDIS_URL", default="")
+
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+
+CELERY_BEAT_SCHEDULE = {
+    "get_latest_stories": {
+        "task": "news.tasks.get_latest_stories",
+        "schedule": crontab(minute="*/5"),
+    },
+}

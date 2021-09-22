@@ -20,7 +20,23 @@
   <div class="grid grid-cols-1 gap-y-4">
     <!-- Latest items -->
     <div class="flex flex-col space-y-2">
-      <div class="font-2xl font-medium">Latest Items</div>
+      <div class="font-2xl font-medium flex">
+        Latest Items
+        <span
+          class="
+            rounded-full
+            px-2
+            bg-yellow-500
+            border-2 border-solid border-white
+            font-black
+            text-white
+            ml-auto
+          "
+          id="storiesCount"
+        >
+          {{stories.count}}
+        </span>
+      </div>
       <div class="flex flex-col space-y-4">
         <!-- filter -->
         <div
@@ -87,7 +103,28 @@
         <!-- reddit posts -->
         <div class="flex flex-col space-y-4 pb-8">
           <!--post-->
-          {% include './posts.html' %}
+          <div id="stories">{% include './stories.html' %}</div>
+          <form class="ml-auto">
+            {% csrf_token %}
+            <a
+              id="lazyLoadLink"
+              href="javascript:void(0);"
+              data-page="2"
+              class="
+                bg-yellow-500
+                hover:bg-yellow-400
+                text-white
+                font-bold
+                py-2
+                px-4
+                border-b-4 border-yellow-700
+                hover:border-yellow-500
+                rounded
+              "
+            >
+              Load More Stories
+            </a>
+          </form>
         </div>
       </div>
     </div>
@@ -95,3 +132,40 @@
 </div>
 
 {% endblock content %}
+
+<!--scripts-->
+{% block scripts %}
+<script>
+  (function ($) {
+    $("#lazyLoadLink").on("click", function () {
+      const link = $(this);
+      let page = link.data("page");
+      $.ajax({
+        type: "post",
+        url: "{% url 'news:lazy_load_stories' %}",
+        data: {
+          page: page,
+        },
+        success: function (response) {
+          // if there are still more pages to load,
+          // add 1 to the "Load More Stories" link's page data attribute
+          // else hide the link
+          if (response.has_next) {
+            link.data("page", page + 1);
+          } else {
+            link.hide();
+          }
+          // append html to the stories div
+          $("#stories").append(response.stories_html);
+          $("#storiesCount").html(
+            parseInt($("#storiesCount").text(), 10) + response.stories_count
+          );
+        },
+        error: function (xhr, status, error) {
+          console.error(xhr, status, error);
+        },
+      });
+    });
+  })(jQuery);
+</script>
+{% endblock scripts %}

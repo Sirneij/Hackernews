@@ -1,39 +1,31 @@
-from django.http import response
 from django.shortcuts import render
-import requests
-
-BASE_API_URL = "https://hacker-news.firebaseio.com/v0"
-
-
-def get_story(id):
-    try:
-        story = requests.get(f"{BASE_API_URL}/item/{id}.json")
-        return story.json()
-    except:
-        print("Error while getting a story.")
-
-
-def get_stories(type):
-    try:
-        story_ids = requests.get(f"{BASE_API_URL}/{type}stories.json").json()
-        stories = []
-        for sid in story_ids:
-            story_response = get_story(sid)
-            stories.append(story_response)
-        return stories
-    except:
-        print("Error while getting list of stories.")
-
-
-import json
+from django.template import loader
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
+from .models import LatestStory, Comment
 
 
 def index(request):
-    # # response = get_story("8861")
-    # # response = requests.get(f"{BASE_API_URL}/newstories.json").json()
-    # response = get_stories("new")
-    # with open("data.json", "w") as outfile:
-    #     json.dump(response, outfile)
-    # # print(response)
-    context = {"page_title": "Welcome to a Beautiful Hackernews clone"}
+    stories = LatestStory.objects.all()[:6]
+    context = {"page_title": "Welcome to a Beautiful Hackernews clone", "stories": stories}
     return render(request, "news/index.html", context)
+
+
+def lazy_load_stories(request):
+    page = request.POST.get("page")
+    stories = LatestStory.objects.all()
+    # use Django's pagination
+    # https://docs.djangoproject.com/en/dev/topics/pagination/
+    results_per_page = 6
+    paginator = Paginator(stories, results_per_page)
+    try:
+        stories = paginator.page(page)
+    except PageNotAnInteger:
+        stories = paginator.page(2)
+    except EmptyPage:
+        stories = paginator.page(paginator.num_pages)
+    # build a html stories list with the paginated stories
+    stories_html = loader.render_to_string("news/stories.html", {"stories": stories})
+    # package output data and return it as a JSON object
+    output_data = {"stories_html": stories_html, "has_next": stories.has_next(), "stories_count": len(stories)}
+    return JsonResponse(output_data)
