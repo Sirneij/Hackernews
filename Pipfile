@@ -12,6 +12,8 @@ python-decouple = "*"
 psycopg2-binary = "*"
 requests = "*"
 python-dateutil = "*"
+django-filter = "*"
+drf-yasg = "*"
 
 [dev-packages]
 

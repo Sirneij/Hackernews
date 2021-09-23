@@ -26,7 +26,7 @@ def get_and_store_story_comments(story):
             datetime.datetime.fromtimestamp(comment_response.get("time", 0)).strftime("%Y-%m-%d %H:%M:%S")
         )
         comment.text = comment_response.get("text", "")
-        comment.url = comment_response.get("url", "")
+        comment.comment_url = comment_response.get("url", "")
         comment.score = comment_response.get("score", 0)
         comment.save()
 
@@ -45,7 +45,7 @@ def store_latest_stories(type):
             datetime.datetime.fromtimestamp(story_response.get("time", 0)).strftime("%Y-%m-%d %H:%M:%S")
         )
         story.slug = slugify(story_response.get("title", "No title for this story from the API"))
-        story.url = story_response.get("url", "")
+        story.story_url = story_response.get("url", "")
         story.score = story_response.get("score", 0)
         story.descendants = story_response.get("descendants", 0)
         story.save()

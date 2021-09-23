@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "news.apps.NewsConfig",
     "rest_framework",
+    "rest_framework.authtoken",
+    "django_filters",
+    "drf_yasg",
     "api.apps.ApiConfig",
 ]
 
@@ -160,4 +163,13 @@ CELERY_BEAT_SCHEDULE = {
         "task": "news.tasks.get_latest_stories",
         "schedule": crontab(minute="*/5"),
     },
+}
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",  # <-- And here
+    ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 100,
 }

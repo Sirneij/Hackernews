@@ -4,7 +4,7 @@ from .models import LatestStory, Comment
 
 @admin.register(LatestStory)
 class LatestStoryAdmin(admin.ModelAdmin):
-    list_display = ["unique_api_story_id", "story_type", "author", "title", "url"]
+    list_display = ["unique_api_story_id", "story_type", "author", "title", "story_url"]
     prepopulated_fields = {"slug": ("title",)}
     search_fields = ["title", "story_type", "author", "created_by"]
     list_per_page = 20
@@ -12,5 +12,5 @@ class LatestStoryAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ["unique_comment_api_id", "author", "title", "url"]
+    list_display = ["unique_comment_api_id", "author", "title", "comment_url"]
     list_per_page = 20
