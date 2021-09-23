@@ -179,7 +179,65 @@ storySearchBox.addEventListener("keyup", (event) => {
             } else {
                 $("#stories").html(response.stories_html);
                 $("#storiesCount").html(0 + response.stories_count);
-                $("#lazyLoadLink").fadeOut();
+                // const searchText = event.target.value;
+
+                // if (searchText !== "" && searchText.length > 1) {
+                //     const regex = new RegExp(searchText, "gi");
+
+                //     let text = document.getElementById("stories").innerHTML;
+
+                //     text = text.replace(
+                //         /(<span class="highlight">|<\/span>)/gim,
+                //         ""
+                //     );
+
+                //     const newText = text.replace(
+                //         regex,
+                //         '<span class="highlight">$&</span>'
+                //     );
+                //     newText.replace(/^[-@.\/#"/>&+\w\s]*$/, "");
+
+                //     document.getElementById("stories").innerHTML = newText;
+                // }
+                if (response.has_next) {
+                    // $("#lazyLoadLink").fadeIn();
+                    $("#lazyLoadLink").hide();
+                    let newpage = 1;
+                    let empty_page = false;
+                    let block_request = false;
+
+                    $(window).scroll(function () {
+                        let margin =
+                            $(document).height() - $(window).height() - 200;
+                        if (
+                            $(window).scrollTop() > margin &&
+                            empty_page == false &&
+                            block_request == false
+                        ) {
+                            block_request = true;
+                            newpage += 1;
+                            $.get(
+                                `/search_by_text/?page=${newpage}&search_text=${event.target.value}`,
+                                (data) => {
+                                    if (data.newhas_next) {
+                                        block_request = false;
+                                        $("#stories").append(
+                                            data.newstories_html
+                                        );
+                                        $("#storiesCount").html(
+                                            parseInt(
+                                                $("#storiesCount").text(),
+                                                10
+                                            ) + +data.newstories_count
+                                        );
+                                    } else {
+                                        empty_page = true;
+                                    }
+                                }
+                            );
+                        }
+                    });
+                }
             }
         },
     });

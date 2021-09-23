@@ -16,3 +16,9 @@
         width: 100%;
     }
 }
+.highlight {
+    color: rgba(245, 158, 11);
+    padding: 0.125rem;
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    border-radius: 3px;
+}
