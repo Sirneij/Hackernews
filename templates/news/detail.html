@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+<!--title-->
+{% block title %}{{page_title}}{% endblock title %}
+
+<!--content-->
+{% block content %}
+<div class="bg-white leading-normal tracking-normal">
+  <div class="min-h-screen max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto pt-20">
+    <div class="px-4 md:px-6 text-xl text-gray-200 leading-normal mb-2">
+      <!--Title-->
+      <div>
+        <p class="text-base md:text-sm text-yellow-500 font-bold">
+          &gt;
+          <a
+            href="{{story.url}}"
+            class="
+              text-base
+              md:text-sm
+              text-yellow-500
+              font-bold
+              no-underline
+              hover:underline
+            "
+            >READ FULL STORY</a
+          >
+        </p>
+        <h1
+          class="
+            font-bold font-sans
+            break-normal
+            text-gray-900
+            pt-6
+            pb-2
+            text-base
+            md:text-3xl
+          "
+        >
+          {{story.title}}
+        </h1>
+        <p class="text-sm md:text-base font-normal text-gray-600">
+          Published on the {{story.time|date:"jS F Y"}} at
+          <!---->
+          {{story.time|time:"P e"}} by {{story.author|capfirst}}
+        </p>
+      </div>
+    </div>
+
+    <!--Divider-->
+    <hr class="border border-solid border-gray-400 mb-8 mx-4" />
+    <!--comments title-->
+    <h2 class="font-bold break-normal text-xl md:text-3xl text-center">
+      Comments
+    </h2>
+
+    {% include './comments.html' %}
+  </div>
+</div>
+{% endblock content %}

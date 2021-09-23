@@ -16,6 +16,7 @@ class LatestStory(models.Model):
     dead = models.BooleanField(default=False)
     url = models.URLField("URL", max_length=1000, null=True)
     score = models.IntegerField("Score", null=True)
+    descendants = models.IntegerField("Descendants", null=True)
     title = models.TextField("Title", null=True)
 
     class Meta:
@@ -27,7 +28,7 @@ class LatestStory(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("news_detail", kwargs={"id": self.id, "slug": self.slug})
+        return reverse("news:story_detail", kwargs={"id": self.id, "slug": self.slug})
 
 
 class Comment(models.Model):

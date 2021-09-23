@@ -1,0 +1,39 @@
+{% load static %}
+<!--comments-->
+{% for comment in story.comments.all %}
+<!--comment-->
+<div class="flex w-full items-center font-sans px-4 py-12">
+  <img
+    class="w-10 h-10 rounded-full mr-4"
+    src="{% static 'images/useravatar.png' %}"
+    alt="{{comment.author|capfirst}}"
+  />
+  <div class="flex-1 px-2">
+    <p class="text-base font-bold text-base md:text-xl leading-none mb-2">
+      {{comment.author|capfirst}}
+    </p>
+    <p class="text-gray-600 text-xs md:text-base">{{comment.text|safe}}</p>
+  </div>
+  <div class="justify-end">
+    <p
+      class="
+        bg-transparent
+        text-xs text-gray-500
+        font-bold
+        py-2
+        px-4
+        rounded-full
+      "
+    >
+      {{comment.time|timesince}}
+    </p>
+  </div>
+</div>
+<!--/comment-->
+{% empty %}
+
+<p class="text-xl font-bold text-center mt-2">
+  This story has no comments currently.
+</p>
+
+{% endfor %}

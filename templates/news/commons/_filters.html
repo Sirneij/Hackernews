@@ -1,0 +1,48 @@
+<form class="flex flex-wrap space-y-4 md:space-y-0">
+  {% csrf_token %}
+  <ul
+    class="
+      filter-switch
+      inline-flex
+      items-center
+      relative
+      h-10
+      p-1
+      space-x-1
+      bg-gray-300
+      rounded-md
+      font-semibold
+      text-yellow-500
+      my-4
+    "
+  >
+    {% for type in story_types %}
+    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
+      <input
+        type="radio"
+        name="filter4"
+        id="filter4-{{type}}"
+        class="sr-only"
+        value="{{type}}"
+      />
+      <label
+        for="filter4-{{type}}"
+        class="
+          h-8
+          py-1
+          px-2
+          text-sm
+          leading-6
+          text-gray-600
+          hover:text-gray-800
+          bg-white
+          rounded
+          shadow
+        "
+      >
+        {{type|capfirst}}
+      </label>
+    </li>
+    {% endfor %}
+  </ul>
+</form>

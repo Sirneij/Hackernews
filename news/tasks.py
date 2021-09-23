@@ -47,6 +47,7 @@ def store_latest_stories(type):
         story.slug = slugify(story_response.get("title", "No title for this story from the API"))
         story.url = story_response.get("url", "")
         story.score = story_response.get("score", 0)
+        story.descendants = story_response.get("descendants", 0)
         story.save()
         get_and_store_story_comments(story)
 
