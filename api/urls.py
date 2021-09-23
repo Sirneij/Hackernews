@@ -4,8 +4,8 @@ from . import views
 
 app_name = "api"
 urlpatterns = [
-    path("latest-stories/", views.latest_stories_list, name="latest_stories_list"),
-    path("latest/<pk>", views.story_detail, name="story_detail"),
+    path("latest-stories/", views.StoryList.as_view(), name="latest_stories_list"),
+    path("latest/<uuid:pk>/", views.StoryDetail.as_view(), name="story_detail"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
