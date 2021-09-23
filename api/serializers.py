@@ -36,3 +36,25 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ["url", "id", "username", "stories"]
+
+
+class CommentSerializer(serializers.HyperlinkedModelSerializer):
+    story = serializers.SlugRelatedField(slug_field="id", queryset=LatestStory.objects.all())
+    author = serializers.ReadOnlyField()
+    score = serializers.ReadOnlyField()
+    time = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Comment
+        fields = [
+            "url",
+            "id",
+            "title",
+            "story",
+            "author",
+            "time",
+            "text",
+            "dead",
+            "comment_url",
+            "score",
+        ]

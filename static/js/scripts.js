@@ -63,7 +63,6 @@ $("#lazyLoadLink").on("click", function () {
             $("#storiesCount").html(
                 parseInt($("#storiesCount").text(), 10) + response.stories_count
             );
-            console.log(window.location.href);
         },
         error: function (xhr, status, error) {
             console.error(xhr, status, error);
@@ -107,7 +106,43 @@ const filterStory = (value) => {
                 $("#stories").html(response.stories_html);
                 $("#storiesCount").html(0 + response.stories_count);
                 if (response.has_next) {
-                    $("#lazyLoadLink").fadeIn();
+                    // $("#lazyLoadLink").fadeIn();
+                    $("#lazyLoadLink").hide();
+                    let newpage = 1;
+                    let empty_page = false;
+                    let block_request = false;
+
+                    $(window).scroll(function () {
+                        let margin =
+                            $(document).height() - $(window).height() - 200;
+                        if (
+                            $(window).scrollTop() > margin &&
+                            empty_page == false &&
+                            block_request == false
+                        ) {
+                            block_request = true;
+                            newpage += 1;
+                            $.get(
+                                `/filter_by_story_type/?page=${newpage}&story_type=${value}`,
+                                (data) => {
+                                    if (data.newhas_next) {
+                                        block_request = false;
+                                        $("#stories").append(
+                                            data.newstories_html
+                                        );
+                                        $("#storiesCount").html(
+                                            parseInt(
+                                                $("#storiesCount").text(),
+                                                10
+                                            ) + +data.newstories_count
+                                        );
+                                    } else {
+                                        empty_page = true;
+                                    }
+                                }
+                            );
+                        }
+                    });
                 }
             }
         },

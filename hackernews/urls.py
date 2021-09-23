@@ -37,7 +37,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("news.urls", namespace="news")),
     path("api/", include("api.urls")),
-    path("api-auth/", include("rest_framework.urls")),
     path("api/docs", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc-ui"),
 ]
 if settings.DEBUG:
