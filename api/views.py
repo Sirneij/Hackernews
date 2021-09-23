@@ -1,5 +1,5 @@
 from news.models import LatestStory, Comment
-from .serializers import LatestStorySerializer, UserSerializer
+from .serializers import CommentSerializer, LatestStorySerializer, UserSerializer
 from rest_framework import generics
 from django.contrib.auth import get_user_model
 from rest_framework import permissions
@@ -17,8 +17,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 def api_root(request, format=None):
     return Response(
         {
-            "users": reverse("user-list", request=request, format=format),
             "stories": reverse("lateststory-list", request=request, format=format),
+            "users": reverse("user-list", request=request, format=format),
+            "comments": reverse("comment-list", request=request, format=format),
         }
     )
 
@@ -42,6 +43,7 @@ class StoryList(generics.ListCreateAPIView):
             time=timezone.now(),
             author=self.request.user.username,
             score=0,
+            descendants=0,
             story_type=self.request.data["story_type"].lower(),
         )
 
@@ -60,3 +62,18 @@ class UserList(generics.ListAPIView):
 class UserDetail(generics.RetrieveAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
+
+
+class CommentList(generics.ListAPIView):
+    queryset = Comment.objects.select_related("story").order_by("-time")
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user.username, score=0)
+
+
+class CommentDetail(generics.RetrieveAPIView):
+    queryset = Comment.objects.select_related("story").order_by("-time")
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly]

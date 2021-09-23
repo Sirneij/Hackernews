@@ -1,5 +1,6 @@
 const csrftoken = $("[name=csrfmiddlewaretoken]").val();
-const types = document.querySelectorAll("li input[type=radio]");
+const types = document.querySelectorAll("li input[name='filter4']");
+// const types = $('input[name="filter4"]');
 const storySearchBox = document.getElementById("storySearchBox");
 const loader = `<div class="border border-solid border-gray-400 shadow    rounded-md p-4 max-w-full w-full mx-auto storyLoader">
 <div class="animate-pulse flex space-x-4">
@@ -63,7 +64,6 @@ $("#lazyLoadLink").on("click", function () {
             $("#storiesCount").html(
                 parseInt($("#storiesCount").text(), 10) + response.stories_count
             );
-            console.log(window.location.href);
         },
         error: function (xhr, status, error) {
             console.error(xhr, status, error);
@@ -73,44 +73,83 @@ $("#lazyLoadLink").on("click", function () {
 
 types.forEach((radioElement) => {
     radioElement.addEventListener("click", (event) => {
-        filterStory(event.target.value);
-    });
-});
-const filterStory = (value) => {
-    let link = document.getElementById("lazyLoadLink");
-    let page = link.dataset.page;
-    let formData = new FormData();
-    formData.append("story_type", value);
-    formData.append("page", page);
-    $.ajax({
-        url: "/filter_by_story_type/",
-        type: "POST",
-        dataType: "json",
-        cache: false,
-        processData: false,
-        contentType: false,
-        data: formData,
-        error: function (xhr) {
-            console.error(xhr.statusText);
-        },
-        success: (response) => {
-            if (response.no_story) {
-                $("#storiesCount").html(0);
-                $("#stories")
-                    .html(`<div class="border border-solid border-gray-400 bg-white rounded shadow flex mb-2 p-2 text-center">
+        let link = document.getElementById("lazyLoadLink");
+        let page = link.dataset.page;
+        let formData = new FormData();
+        formData.append("story_type", $('input[name="filter4"]:checked').val());
+        formData.append("page", page);
+        console.log($('input[name="filter4"]:checked').val());
+        $.ajax({
+            url: "/filter_by_story_type/",
+            type: "POST",
+            dataType: "json",
+            cache: false,
+            processData: false,
+            contentType: false,
+            data: formData,
+            error: function (xhr) {
+                console.error(xhr.statusText);
+            },
+            success: (response) => {
+                if (response.no_story) {
+                    $("#storiesCount").html(0);
+                    $("#stories")
+                        .html(`<div class="border border-solid border-gray-400 bg-white rounded shadow flex mb-2 p-2 text-center">
                   <p class="text-2xl font-bold text-center">
-                    No latest story for the filter ${value}
+                    No latest story for the filter ${$(
+                        'input[name="filter4"]:checked'
+                    ).val()}
                   </p>
                 </div>`);
-                $("#lazyLoadLink").fadeOut();
-            } else {
-                $("#stories").html(response.stories_html);
-                $("#storiesCount").html(0 + response.stories_count);
-                if (response.has_next) {
-                    $("#lazyLoadLink").fadeIn();
+                    $("#lazyLoadLink").fadeOut();
+                } else {
+                    $("#lazyLoadLink").hide();
+                    // getMoreData(
+                    //     "/filter_by_story_type/",
+                    //     $('input[name="filter4"]:checked').val()
+                    // );
                 }
-            }
-        },
+            },
+        });
+    });
+});
+
+const getMoreData = (url, value) => {
+    let newpage = 1;
+    let empty_page = false;
+    let block_request = false;
+    $(window).scroll(function () {
+        let margin = $(document).height() - $(window).height() - 200;
+        if (
+            $(window).scrollTop() > margin &&
+            empty_page == false &&
+            block_request == false
+        ) {
+            block_request = true;
+            newpage += 1;
+            $.ajax({
+                url: `${url}?page=${newpage}&story_type=${value}`,
+                method: "GET",
+                cache: false,
+                processData: false,
+                contentType: false,
+                error: function (xhr) {
+                    console.error(xhr.statusText);
+                },
+                success: function (data) {
+                    if (data.has_next) {
+                        block_request = false;
+                        $("#stories").append(data.stories_html);
+                        $("#storiesCount").html(
+                            parseInt($("#storiesCount").text(), 10) +
+                                data.stories_count
+                        );
+                    } else {
+                        empty_page = true;
+                    }
+                },
+            });
+        }
     });
 };
 
@@ -122,11 +161,8 @@ storySearchBox.addEventListener("keyup", (event) => {
     formData.append("page", page);
     $.ajax({
         url: "/search_by_text/",
-        type: "POST",
+        method: "POST",
         dataType: "json",
-        cache: false,
-        processData: false,
-        contentType: false,
         data: formData,
         error: function (xhr) {
             console.error(xhr.statusText);

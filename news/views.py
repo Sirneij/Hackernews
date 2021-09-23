@@ -45,27 +45,51 @@ def lazy_load_stories(request):
 
 
 def filter_by_story_type(request):
-    story_type = request.POST["story_type"]
-    stories = LatestStory.objects.filter(story_type=story_type).order_by("-time")
-    if stories.exists():
-        page = request.POST.get("page")
-        results_per_page = 4
-        paginator = Paginator(stories, results_per_page)
-        try:
-            stories = paginator.page(page)
-        except PageNotAnInteger:
-            stories = paginator.page(2)
-        except EmptyPage:
-            stories = paginator.page(paginator.num_pages)
-        stories_html = loader.render_to_string("news/stories.html", {"stories": stories})
-        output_data = {
-            "stories_html": stories_html,
-            "has_next": stories.has_next(),
-            "stories_count": len(stories),
-        }
-        return JsonResponse(output_data)
-    else:
-        return JsonResponse({"no_story": True})
+    if request.method == "POST":
+        story_type = request.POST.get("story_type")
+        print(story_type)
+        stories = LatestStory.objects.filter(story_type=story_type).order_by("-time")
+        if stories.exists():
+            page = request.POST.get("page")
+            results_per_page = 4
+            paginator = Paginator(stories, results_per_page)
+            try:
+                stories = paginator.page(page)
+            except PageNotAnInteger:
+                stories = paginator.page(1)
+            except EmptyPage:
+                stories = paginator.page(paginator.num_pages)
+            stories_html = loader.render_to_string("news/stories.html", {"stories": stories})
+
+            output_data = {
+                "stories_html": stories_html,
+                "has_next": stories.has_next(),
+                "stories_count": len(stories),
+            }
+            return JsonResponse(output_data)
+        else:
+            return JsonResponse({"no_story": True})
+    elif request.method == "GET":
+        story_type = request.GET.get("story_type")
+        stories = LatestStory.objects.filter(story_type=story_type).order_by("-time")
+        if len(stories) > 4:
+            page = request.GET.get("page")
+            results_per_page = 4
+            paginator = Paginator(stories, results_per_page)
+            try:
+                stories = paginator.page(page)
+            except PageNotAnInteger:
+                stories = paginator.page(1)
+            except EmptyPage:
+                stories = paginator.page(paginator.num_pages)
+            stories_html = loader.render_to_string("news/stories.html", {"stories": stories})
+
+            output_data = {
+                "stories_html": stories_html,
+                "has_next": stories.has_next(),
+                "stories_count": len(stories),
+            }
+            return JsonResponse(output_data)
 
 
 def search_by_text(request):

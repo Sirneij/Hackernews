@@ -9,6 +9,8 @@ urlpatterns = [
     path("latest-stories/<uuid:pk>/", views.StoryDetail.as_view(), name="lateststory-detail"),
     path("users/", views.UserList.as_view(), name="user-list"),
     path("users/<int:pk>/", views.UserDetail.as_view(), name="user-detail"),
+    path("comments/", views.CommentList.as_view(), name="comment-list"),
+    path("comments/<uuid:pk>/", views.CommentDetail.as_view(), name="comment-detail"),
     path("api-token-auth/", obtain_auth_token, name="api_token_auth"),
 ]
 
