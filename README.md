@@ -14,7 +14,7 @@ The application also provides an in-depth text searching with search term highli
 
 ## Local setup
 
-The application was built on a Linux machine (Pop!\_OS 20.04 LTS) with [Python][6] 3.85, [git][8], and [redis][5] installed. Virtual environment was managed by [pipenv][7] though you can opt for other other virtual environment tools (`requirements.txt` is included). Ensure your machine has all these tools to locally run this web application.
+The application was built on a Linux machine (Pop!\_OS 20.04 LTS) with [Python][6] 3.8.10, [git][8], and [redis][5] installed. Virtual environment was managed by [pipenv][7] though you can opt for other virtual environment tools (`requirements.txt` is included). Ensure your machine has all these tools to locally run this web application.
 
 A typical setup to the app up and running locally is stated below:
 
@@ -70,7 +70,7 @@ A typical setup to the app up and running locally is stated below:
 
 ## About the Web application
 
-The application was built using [Django web framework][9], [SQLite][10] database and [redis][5] as a broker for [celery][4]. It has the following structure:
+The application was built using [Django web framework][9], Tailwind CSS, [SQLite][10] database and [redis][5] as a broker for [celery][4]. It has the following structure:
 
 ```bash
 .
