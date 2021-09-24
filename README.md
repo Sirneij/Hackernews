@@ -8,7 +8,7 @@ This application tends to make it easier to navigate Hackernews by utilizing its
 
 Data are being consumed every 5 minutes via a background task powered by [Celery][4] with [redis][5] as backend and broker. This presents performance gains as users do not need to wait for such actions' completions.
 
-The application also provides an in-depth text searching. Though it is not an enterprise grade full-text functionality but it is close to that. PostgreSQL could have been used as database to fascilitate full-text search but it was later dropped.
+The application also provides an in-depth text searching with search term highlighting. Though it is not an enterprise grade full-text functionality but it is close to that. PostgreSQL could have been used as database to fascilitate full-text search but it was later dropped.
 
 ## Local setup
 

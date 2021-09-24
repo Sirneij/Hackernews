@@ -179,28 +179,13 @@ storySearchBox.addEventListener("keyup", (event) => {
             } else {
                 $("#stories").html(response.stories_html);
                 $("#storiesCount").html(0 + response.stories_count);
-                // const searchText = event.target.value;
-
-                // if (searchText !== "" && searchText.length > 1) {
-                //     const regex = new RegExp(searchText, "gi");
-
-                //     let text = document.getElementById("stories").innerHTML;
-
-                //     text = text.replace(
-                //         /(<span class="highlight">|<\/span>)/gim,
-                //         ""
-                //     );
-
-                //     const newText = text.replace(
-                //         regex,
-                //         '<span class="highlight">$&</span>'
-                //     );
-                //     newText.replace(/^[-@.\/#"/>&+\w\s]*$/, "");
-
-                //     document.getElementById("stories").innerHTML = newText;
-                // }
+                let context = document.querySelector("#stories");
+                let instance = new Mark(context);
+                instance.mark(event.target.value, {
+                    element: "span",
+                    className: "highlight",
+                });
                 if (response.has_next) {
-                    // $("#lazyLoadLink").fadeIn();
                     $("#lazyLoadLink").hide();
                     let newpage = 1;
                     let empty_page = false;
