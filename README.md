@@ -1,6 +1,10 @@
 # Hackernews
 
-This application tends to make it easier to navigate Hackernews by utilizing its public [API][1]. It provides a better UX and interativity courtesy its real-time searching and filtering capabilities, beautiful UI, and lazy-loading. Custom API was also incorporated for ease of accessibility, though [POST requests][2] require [token-based authentication][3]. Though it depends on hackernews API, all the available data are stored in a separate database and hosted on this platform thereby providing parallel storage and preventing a single source of failure. Hence more reliable.
+This application tends to make it easier to navigate Hackernews by utilizing its public [API][1]. It provides a better UX and interativity courtesy its real-time searching and filtering capabilities, beautiful UI, and lazy-loading. Custom API was also incorporated for ease of accessibility, though [POST requests][2] require [token-based authentication][3]. Though it depends on hackernews API, all the available data are stored in a separate database and hosted on this platform thereby providing parallel storage and preventing a single source of failure. Hence more reliable. It looks like:
+
+![Home page of the application](home.png "Home page of the application")
+
+![Detail page of each story in the application](detail.png "Detail page of each story in the application")
 
 Data are being consumed every 5 minutes via a background task powered by [Celery][4] with [redis][5] as backend and broker. This presents performance gains as users do not need to wait for such actions' completions.
 
