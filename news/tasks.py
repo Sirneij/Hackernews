@@ -49,7 +49,7 @@ def store_latest_stories(type):
         story.score = story_response.get("score", 0)
         story.descendants = story_response.get("descendants", 0)
         story.save()
-        get_and_store_story_comments(story)
+        get_and_store_story_comments.delay(story)
 
 
 @shared_task
