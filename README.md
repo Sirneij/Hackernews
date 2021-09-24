@@ -1,5 +1,7 @@
 # Hackernews
 
+**It is live on heroku at [newhackernews.herokuapp.com][0].**
+
 This application tends to make it easier to navigate Hackernews by utilizing its public [API][1]. It provides a better UX and interativity courtesy its real-time searching and filtering capabilities, beautiful UI, and lazy-loading. Custom API was also incorporated for ease of accessibility, though [POST requests][2] require [token-based authentication][3]. Though it depends on hackernews API, all the available data are stored in a separate database and hosted on this platform thereby providing parallel storage and preventing a single source of failure. Hence more reliable. It looks like:
 
 ![Home page of the application](home.png "Home page of the application")
@@ -262,6 +264,7 @@ You can achieve same with JavaScript's [fetch][14], or [axios][15].
 
 That is pretty much it!!!
 
+[0]: https://newhackernews.herokuapp.com/ "newhackernews.herokuapp.com"
 [1]: https://hackernews.api-docs.io "Hackernews API"
 [2]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST "POST"
 [3]: https://www.okta.com/identity-101/what-is-token-based-authentication/ "What Is Token-Based Authentication?"
