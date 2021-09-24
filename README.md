@@ -254,6 +254,8 @@ headers = {'Authorization': 'Token 55868c9d71901f4bb09059eb0a669485511586f7'}
 r = requests.post(url, headers=headers, data=payload)
 ```
 
+You can achieve same with JavaScript's [fetch][14], or [axios][15].
+
 That is pretty much it!!!
 
 [1]: https://hackernews.api-docs.io "Hackernews API"
@@ -269,3 +271,5 @@ That is pretty much it!!!
 [11]: https://github.com/axnsan12/drf-yasg/ "drf-yasg"
 [12]: https://swagger.io/ "Swagger"
 [13]: https://docs.python-requests.org/en/latest/ "Python requests"
+[14]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch "Fetch API"
+[15]: https://www.npmjs.com/package/axios "axios"
