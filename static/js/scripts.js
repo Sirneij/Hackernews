@@ -227,3 +227,9 @@ storySearchBox.addEventListener("keyup", (event) => {
         },
     });
 });
+
+if(document.querySelector("#latestStoryEmpty")){
+ $("#lazyLoadLink").hide();
+}else{
+ $("#lazyLoadLink").fadeIn();
+}
