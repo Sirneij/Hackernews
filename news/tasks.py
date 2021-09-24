@@ -19,7 +19,7 @@ def get_and_store_story_comments(unique_api_story_id, story_id):
     single_story = get_item(unique_api_story_id)
     for kid in single_story.get("kids", []):
         comment_response = get_item(kid)
-        comment, _ = Comment.objects.get_or_create(unique_comment_api_id=kid, story=story_id)
+        comment, _ = Comment.objects.get_or_create(unique_comment_api_id=kid, story=LatestStory.objects.get(id=story_id))
         comment.story_type = comment_response.get("type", "")
         comment.author = comment_response.get("by", "")
         comment.time = dateutil.parser.parse(
