@@ -14,6 +14,7 @@ requests = "*"
 python-dateutil = "*"
 django-filter = "*"
 drf-yasg = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
