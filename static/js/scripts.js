@@ -226,7 +226,7 @@ storySearchBox.addEventListener("keyup", (event) => {
                         }
                     });
                 } else {
-                    link.fadeOut();
+                    $("#lazyLoadLink").fadeOut();
                 }
             }
         },
