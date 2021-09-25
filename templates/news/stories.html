@@ -29,13 +29,14 @@
     </div>
     <div class="text-2xl font-bold">
       {% if story.story_type == 'comment' %} {% if story.text %}
-      <p>{{story.text|safe|truncatewords:12}}</p>
+      <p class="text-sm font-normal">{{story.text|safe|truncatewords:12}}</p>
       {% else %}
-      <p>This comment has no content</p>
+      <p class="text-sm font-normal">This comment has no content</p>
       {% endif %} {% else %}
       <a href="{{story.get_absolute_url}}">{{story.title}}</a>
       {% endif %}
     </div>
+   {% if story.story_type != 'comment' %}
     <div class="flex text-gray-500 space-x-4">
       <div
         class="text-lg flex place-items-center space-x-2 p-2 hover:bg-gray-200"
@@ -45,6 +46,7 @@
         <div>{{story.descendants}} comment{{story.descendants|pluralize}}</div>
       </div>
     </div>
+   {% endif %}
   </div>
 </div>
 {% empty %}
