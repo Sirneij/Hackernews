@@ -72,6 +72,7 @@ $("#lazyLoadLink").on("click", function () {
 
 types.forEach((radioElement) => {
     radioElement.addEventListener("click", (event) => {
+        console.log(event.target.value);
         filterStory(event.target.value);
     });
 });
@@ -228,8 +229,38 @@ storySearchBox.addEventListener("keyup", (event) => {
     });
 });
 
-if(document.querySelector("#latestStoryEmpty")){
- $("#lazyLoadLink").hide();
-}else{
- $("#lazyLoadLink").fadeIn();
+if (document.querySelector("#latestStoryEmpty")) {
+    $("#lazyLoadLink").hide();
+} else {
+    $("#lazyLoadLink").fadeIn();
 }
+
+// function setTheme(themeName) {
+//     localStorage.setItem("theme", themeName);
+//     document.getElementById("checkbox").checked = true;
+//     localStorage.setItem("themeSwitcher", "true");
+//     document.documentElement.classList.add(themeName);
+// }
+
+// function removeTheme(themeName) {
+//     document.documentElement.classList.remove(themeName);
+//     localStorage.setItem("theme", "");
+//     document.getElementById("checkbox").checked = false;
+//     localStorage.setItem("themeSwitcher", "false");
+// }
+// // function to toggle between light and dark theme
+// function toggleTheme() {
+//     if (localStorage.getItem("theme") === "dark") {
+//         removeTheme("dark");
+//     } else {
+//         setTheme("dark");
+//     }
+// }
+// // Immediately invoked function to set the theme on initial load
+// (function () {
+//     if (localStorage.getItem("theme") === "dark") {
+//         setTheme("dark");
+//     } else {
+//         removeTheme("dark");
+//     }
+// })();

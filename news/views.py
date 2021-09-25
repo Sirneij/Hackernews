@@ -8,7 +8,12 @@ from . import utils
 
 def index(request):
     stories = LatestStory.objects.all().order_by("-time")[:4]
-    story_types = ["job", "story", "comment", "poll", "pollopt"]
+    types = LatestStory.objects.order_by("-story_type").values_list("story_type")
+    story_types = []
+    for t in types:
+        if t[0] in story_types:
+            continue
+        story_types.append(t[0])
     context = {"page_title": "Welcome to a Beautiful Hackernews clone", "stories": stories, "story_types": story_types}
     return render(request, "news/index.html", context)
 

@@ -15,6 +15,10 @@
     #searchForm > input {
         width: 100%;
     }
+    .col-sm-screen {
+        flex-direction: column !important;
+        padding: 0.25rem;
+    }
 }
 .highlight {
     color: rgba(245, 158, 11);
