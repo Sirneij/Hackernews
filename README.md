@@ -120,6 +120,7 @@ The application was built using [Django web framework][9], [Tailwind CSS][16], [
 │   └── views.py
 ├── celerybeat-schedule
 ├── db.sqlite3
+├── detail.png
 ├── hackernews
 │   ├── asgi.py
 │   ├── celery.py
@@ -131,6 +132,7 @@ The application was built using [Django web framework][9], [Tailwind CSS][16], [
 │   │   └── production.py
 │   ├── urls.py
 │   └── wsgi.py
+├── home.png
 ├── manage.py
 ├── news
 │   ├── admin.py
@@ -138,22 +140,39 @@ The application was built using [Django web framework][9], [Tailwind CSS][16], [
 │   ├── __init__.py
 │   ├── migrations
 │   │   ├── 0001_initial.py
-│   │   ├── 0002_auto_20210923_1046.py
+│   │   ├── 0002_alter_comment_story.py
 │   │   └── __init__.py
 │   ├── models.py
 │   ├── tasks.py
+│   ├── templatetags
+│   │   ├── custom_tags.py
+│   │   └── __init__.py
 │   ├── tests.py
 │   ├── urls.py
 │   ├── utils.py
 │   └── views.py
 ├── Pipfile
 ├── Pipfile.lock
+├── Procfile
 ├── pyproject.toml
 ├── README.md
 ├── requirements.txt
+├── runtime.txt
 ├── setup.cfg
 ├── static
 │   ├── admin
+│   │   ├── css
+│   │   │   ├── autocomplete.css
+│   │   │   ├── ...
+│   │   ├── fonts
+│   │   │   ├── LICENSE.txt
+│   │   │   ├── ...
+│   │   ├── img
+│   │   │   ├── calendar-icons.svg
+│   │   │   ├── ...
+│   │   └── js
+│   │       ├── actions.js
+│   │       ├── ...
 │   ├── css
 │   │   ├── all.min.css
 │   │   ├── style.css
@@ -162,11 +181,11 @@ The application was built using [Django web framework][9], [Tailwind CSS][16], [
 │   │   └── useravatar.png
 │   ├── js
 │   │   ├── jquery.min.js
+│   │   ├── mark.min.js
 │   │   └── scripts.js
 │   └── webfonts
 │       ├── fa-brands-400.eot
 │       ├── ...
-│
 └── templates
     ├── base.html
     ├── includes
@@ -179,7 +198,7 @@ The application was built using [Django web framework][9], [Tailwind CSS][16], [
         ├── index.html
         └── stories.html
 
-31 directories, 203 files
+32 directories, 210 files
 ```
 
 The major apps are `news` and `accounts`. While the former handles almost all the physical functionalities of the system, the latter only does user stuff. The `api` app exposes the data for consumption. It is documented using [drf-yasg][11], a [Swagger][12] generation tool implemented without using the schema generation provided by Django Rest Framework. The `api` has a [token-based authentication][3] which requires that all [POST requests][2] must provide a `token` to be accepted, otherwise a not too interesting response:
