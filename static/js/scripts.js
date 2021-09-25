@@ -144,6 +144,8 @@ const filterStory = (value) => {
                             );
                         }
                     });
+                } else {
+                    link.fadeOut();
                 }
             }
         },
@@ -223,6 +225,8 @@ storySearchBox.addEventListener("keyup", (event) => {
                             );
                         }
                     });
+                } else {
+                    link.fadeOut();
                 }
             }
         },
