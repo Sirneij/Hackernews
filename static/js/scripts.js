@@ -145,7 +145,7 @@ const filterStory = (value) => {
                         }
                     });
                 } else {
-                    link.fadeOut();
+                    $("#lazyLoadLink").fadeOut();
                 }
             }
         },
