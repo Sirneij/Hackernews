@@ -93,7 +93,7 @@ A typical setup to the app up and running locally is stated below:
 
 ## About the Web application
 
-The application was built using [Django web framework][9], [Tailwind CSS][16], [SQLite][10] database and [redis][5] as a broker for [celery][4]. It has the following structure:
+The application was built using [Django web framework][9], [Tailwind CSS][16], [SQLite][10] database ([PostgreSQL][19] in production or on [heroku](https://heroku.com)) and [redis][5] as a broker for [celery][4]. Lazy loading, real-time search and filtering were fascilitated by [jQuery ajax][18] including infinite scroll capabilities. It has the following structure:
 
 ```bash
 .
@@ -326,3 +326,5 @@ That is pretty much it!!!
 [15]: https://www.npmjs.com/package/axios "axios"
 [16]: https://tailwindcss.com/ "Tailwind css"
 [17]: https://www.linkedin.com/in/idogun-john-nelson/ "Idogun John Nelson"
+[18]: https://api.jquery.com/jquery.ajax/ "JQuery Ajax"
+[19]: https://www.postgresql.org/ "PostgreSQL"
