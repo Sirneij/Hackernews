@@ -6,7 +6,7 @@ import uuid
 
 class LatestStory(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    unique_api_story_id = models.CharField("Story ID", max_length=10, null=True)
+    unique_api_story_id = models.IntegerField("Story ID", null=True)
     story_type = models.CharField("Type of item", max_length=15, null=True)
     author = models.CharField("Author", max_length=50, null=True)
     slug = models.SlugField(max_length=2000, null=True)
@@ -18,6 +18,7 @@ class LatestStory(models.Model):
     score = models.IntegerField("Score", null=True)
     descendants = models.IntegerField("Descendants", null=True)
     title = models.TextField("Title", null=True)
+    parent_id = models.IntegerField("Parent ID", null=True)
 
     class Meta:
         unique_together = ("unique_api_story_id", "title")
@@ -33,8 +34,8 @@ class LatestStory(models.Model):
 
 class Comment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    unique_comment_api_id = models.CharField("Story ID", max_length=10, null=True)
-    story = models.ForeignKey(LatestStory, on_delete=models.CASCADE, related_name="comments")
+    unique_comment_api_id = models.IntegerField("Story ID", null=True, unique=True)
+    story = models.ForeignKey(LatestStory, on_delete=models.CASCADE, related_name="comments", null=True)
     author = models.CharField("Author", max_length=50, null=True)
     time = models.DateTimeField("Date created", null=True)
     text = models.TextField("Text", null=True)
@@ -44,7 +45,6 @@ class Comment(models.Model):
     title = models.TextField("Title", null=True)
 
     class Meta:
-        unique_together = ("unique_comment_api_id", "story")
         verbose_name = "Comment"
         verbose_name_plural = "Comments"
 

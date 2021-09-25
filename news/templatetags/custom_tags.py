@@ -1,10 +1,17 @@
-from news.models import LatestStory, Comment
+from news.models import Comment, LatestStory
 from django import template
 
 register = template.Library()
 
+
 @register.filter
-def story_title(id):
-    comm = Comment.objects.select_related('story').get(id=id)
+def story_title(parent_id):
+    comm = LatestStory.objects.filter(unique_api_story_id=parent_id).first()
     if comm:
-        return comm.story.title
+        if comm.story_type == "comment":
+            comm2 = LatestStory.objects.filter(unique_api_story_id=comm.parent_id).first()
+            if comm2:
+                return comm2.title
+        return comm.title
+    else:
+        return "Parent story has not been fetched yet"

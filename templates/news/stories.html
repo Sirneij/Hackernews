@@ -30,35 +30,37 @@
         Posted by {{story.author}} {{story.time|timesince}} ago
       </p>
       {% else %}
-       <p class="font-normal text-gray-400 text-sm">
+      <p class="font-normal text-gray-400 text-sm">
         by {{story.author}}, made {{story.time|timesince}} ago
-       </p>
+      </p>
       {% endif %}
     </div>
     <div>
-      {% if story.story_type == 'comment' %} 
-        <!---->
-        {% if story.text %}
-           <p class="text-sm font-normal">{{story.text|safe|truncatewords:12}}</p>
-        {% else %}
-           <p class="text-sm font-normal">This comment has no content</p>
-        {% endif %}
-        <!---->
+      {% if story.story_type == 'comment' %}
+      <!---->
+      {% if story.text %}
+      <p class="text-sm font-normal">{{story.text|safe|truncatewords:12}}</p>
       {% else %}
-      <a class="text-2xl font-bold" href="{{story.get_absolute_url}}">{{story.title}}</a>
+      <p class="text-sm font-normal">This comment has no content</p>
+      {% endif %}
+      <!---->
+      {% else %}
+      <a class="text-2xl font-bold" href="{{story.get_absolute_url}}"
+        >{{story.title}}</a
+      >
       {% endif %}
     </div>
     <div class="flex text-gray-500 space-x-4">
       <div
         class="text-lg flex place-items-center space-x-2 p-2 hover:bg-gray-200"
       >
-       {% if story.story_type != 'comment' %}
+        {% if story.story_type != 'comment' %}
         <i class="fas fa-comment"></i>
 
         <div>{{story.descendants}} comment{{story.descendants|pluralize}}</div>
         {% else %}
-        <p>In {{ story.id|story_title }}<p>
-        {% endif %}
+        <p>In {{ story.parent_id|story_title|safe }}</p>
+        <p>{% endif %}</p>
       </div>
     </div>
   </div>

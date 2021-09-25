@@ -20,7 +20,15 @@ def index(request):
 
 def story_detail(request, id, slug):
     story = get_object_or_404(LatestStory, id=id, slug=slug)
-    context = {"page_title": f"{story.title}", "story": story}
+    # story_comments = LatestStory.objects.filter(unique_api_story_id=story.parent_id).values("author", "text", "time")
+    # story_comments = []
+    # for story in story_comments:
+    #     story_comments.append(story)
+    context = {
+        "page_title": f"{story.title}",
+        "story": story,
+        # "story_comments": story_comments,
+    }
     return render(request, "news/detail.html", context)
 
 
