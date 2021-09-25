@@ -19,7 +19,7 @@ def store_latest_stories():
         ...
 ```
 
-Also, the UI now allows only the item types available in the database for filtering. As soon as a new item type is included, it will automatically be added to the filters.
+Also, the UI now allows only the item types available in the database for filtering. As soon as a new item type is fetched from the [API][1], it will automatically be added to the filters.
 
 ## Update
 
