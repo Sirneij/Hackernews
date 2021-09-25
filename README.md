@@ -1,5 +1,28 @@
 # Hackernews
 
+## Latest update
+
+Changed the algorithm used in fetching the stories from the [API][1]. Instead of getting only the new (latest) stories, I now get the maximum or largest (latest) item ID, then walk backwards to fetch subsequent ones:
+
+```python
+...
+
+def get_max_item_id():
+    max_item_id = requests.get(f"{BASE_API_URL}/maxitem.json")
+    return max_item_id.json()
+
+@shared_task
+def store_latest_stories():
+    max_item_id = get_max_item_id()
+    for sid in reversed(range(max_item_id)):
+        story_response = get_item(sid)
+        ...
+```
+
+Also, the UI now allows only the item types available in the database for filtering. As soon as a new item type is included, it will automatically be added to the filters.
+
+## Update
+
 **It is live on heroku at [newhackernews.herokuapp.com][0].**
 
 This application tends to make it easier to navigate Hackernews by utilizing its public [API][1]. It provides a better UX and interativity courtesy its real-time searching and filtering capabilities, beautiful UI, and lazy-loading. Custom API was also incorporated for ease of accessibility, though [POST requests][2] require [token-based authentication][3]. Though it depends on hackernews API, all the available data are stored in a separate database and hosted on this platform thereby providing parallel storage and preventing a single source of failure. Hence more reliable. It looks like:
@@ -70,7 +93,7 @@ A typical setup to the app up and running locally is stated below:
 
 ## About the Web application
 
-The application was built using [Django web framework][9], Tailwind CSS, [SQLite][10] database and [redis][5] as a broker for [celery][4]. It has the following structure:
+The application was built using [Django web framework][9], [Tailwind CSS][16], [SQLite][10] database and [redis][5] as a broker for [celery][4]. It has the following structure:
 
 ```bash
 .
@@ -280,3 +303,4 @@ That is pretty much it!!!
 [13]: https://docs.python-requests.org/en/latest/ "Python requests"
 [14]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch "Fetch API"
 [15]: https://www.npmjs.com/package/axios "axios"
+[16]: https://tailwindcss.com/ "Tailwind css"
