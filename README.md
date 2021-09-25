@@ -306,6 +306,8 @@ You can achieve same with JavaScript's [fetch][14], or [axios][15].
 
 That is pretty much it!!!
 
+**You can connect with or follow me on [LinkedIn][17], and [contact me for a job, something worthwhile or buying a coffee ☕](mailto:sirneij@gmail.com)**
+
 [0]: https://newhackernews.herokuapp.com/ "newhackernews.herokuapp.com"
 [1]: https://hackernews.api-docs.io "Hackernews API"
 [2]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST "POST"
@@ -323,3 +325,4 @@ That is pretty much it!!!
 [14]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch "Fetch API"
 [15]: https://www.npmjs.com/package/axios "axios"
 [16]: https://tailwindcss.com/ "Tailwind css"
+[17]: https://www.linkedin.com/in/idogun-john-nelson/ "Idogun John Nelson"
