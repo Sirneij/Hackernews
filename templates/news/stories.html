@@ -23,9 +23,15 @@
     <div class="flex place-items-center space-x-2 py-2">
       <!--<img src="#" alt="" class="w-8 rounded-full py-2" />-->
       <div class="font-bold">{{story.story_type|capfirst}}</div>
-      <div class="font-bold text-gray-600">
+      {% if story.story_type != 'comment' %}
+      <p class="font-bold text-gray-600">
         Posted by {{story.author}} {{story.time|timesince}} ago
-      </div>
+      </p>
+      {% else %}
+       <p class="font-normal text-gray-400 text-sm">
+        by {{story.author}} and made {{story.time|timesince}} ago
+       </p>
+      {% endif %}
     </div>
     <div>
       {% if story.story_type == 'comment' %} 
