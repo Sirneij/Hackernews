@@ -58,6 +58,7 @@ def store_latest_stories():
             story_response.get("title", f"No title for this {story_response.get('type', 'No type')} from the API")
         )
         story.story_url = story_response.get("url", "")
+        story.text = story_response.get("text", "")
         story.score = story_response.get("score", 0)
         story.descendants = story_response.get("descendants", 0)
         story.save()
