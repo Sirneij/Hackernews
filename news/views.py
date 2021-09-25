@@ -79,7 +79,7 @@ def search_by_text(request):
                 "stories_html": stories_html,
                 "has_next": stories.has_next(),
                 "stories_count": len(stories),
-                "real_stories": stories_list,
+                # "real_stories": stories_list,
             }
             return JsonResponse(output_data)
         elif len(stories) < 4 and len(stories) > 0:
@@ -91,7 +91,7 @@ def search_by_text(request):
                 "stories_html": stories_html,
                 "has_next": False,
                 "stories_count": len(stories),
-                "real_stories": stories_list,
+                # "real_stories": stories_list,
             }
             return JsonResponse(output_data)
         else:
@@ -117,7 +117,7 @@ def search_by_text(request):
                 "stories_html": stories_html,
                 "has_next": stories.has_next(),
                 "stories_count": len(stories),
-                "real_stories": stories_list,
+                # "real_stories": stories_list,
             }
             return JsonResponse(output_data)
         elif len(stories) < 4 and len(stories) > 0:
@@ -129,7 +129,7 @@ def search_by_text(request):
                 "stories_html": stories_html,
                 "has_next": False,
                 "stories_count": len(stories),
-                "real_stories": stories_list,
+                # "real_stories": stories_list,
             }
             return JsonResponse(output_data)
         else:
@@ -161,7 +161,6 @@ def filter_by_story_type(request):
             stories_html = loader.render_to_string("news/stories.html", {"stories": stories})
             output_data = {
                 "stories_html": stories_html,
-                "stories": stories,
                 "has_next": False,
                 "stories_count": len(stories),
             }
