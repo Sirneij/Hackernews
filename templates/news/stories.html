@@ -27,13 +27,17 @@
         Posted by {{story.author}} {{story.time|timesince}} ago
       </div>
     </div>
-    <div class="text-2xl font-bold">
-      {% if story.story_type == 'comment' %} {% if story.text %}
-      <p class="text-sm font-normal">{{story.text|safe|truncatewords:12}}</p>
+    <div>
+      {% if story.story_type == 'comment' %} 
+        <!---->
+        {% if story.text %}
+           <p class="text-sm font-normal">{{story.text|safe}}</p>
+        {% else %}
+           <p class="text-sm font-normal">This comment has no content</p>
+        {% endif %}
+        <!---->
       {% else %}
-      <p class="text-sm font-normal">This comment has no content</p>
-      {% endif %} {% else %}
-      <a href="{{story.get_absolute_url}}">{{story.title}}</a>
+      <a class="text-2xl font-bold" href="{{story.get_absolute_url}}">{{story.title}}</a>
       {% endif %}
     </div>
    {% if story.story_type != 'comment' %}
