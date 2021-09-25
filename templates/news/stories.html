@@ -39,7 +39,7 @@
       {% if story.story_type == 'comment' %}
       <!---->
       {% if story.text %}
-      <p class="text-sm font-normal">{{story.text|safe|truncatewords:12}}</p>
+      <p class="text-sm font-normal">{{story.text|safe|truncatewords:22}}</p>
       {% else %}
       <p class="text-sm font-normal">This comment has no content</p>
       {% endif %}
@@ -59,8 +59,13 @@
 
         <div>{{story.descendants}} comment{{story.descendants|pluralize}}</div>
         {% else %}
-        <p>In {{ story.parent_id|story_title|safe }}</p>
-        <p>{% endif %}</p>
+        <i class="fas fa-child"></i>
+        <p class="text-sm">
+          <a href="{{ story.parent_id|story_url }}">
+            In {{ story.parent_id|story_title|safe }}
+          </a>
+        </p>
+        {% endif %}
       </div>
     </div>
   </div>
