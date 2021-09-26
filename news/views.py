@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
-from .models import LatestStory
+from .models import Comment, LatestStory
 from . import utils
 
 
@@ -20,14 +20,15 @@ def index(request):
 
 def story_detail(request, id, slug):
     story = get_object_or_404(LatestStory, id=id, slug=slug)
-    # story_comments = LatestStory.objects.filter(unique_api_story_id=story.parent_id).values("author", "text", "time")
-    # story_comments = []
-    # for story in story_comments:
-    #     story_comments.append(story)
+    comments_by_parent_id = LatestStory.objects.filter(unique_api_story_id=story.parent_id)
+    comments_normally = Comment.objects.select_related("story").filter(story=story)
+    from itertools import chain
+
+    story_comments = list(chain(comments_by_parent_id, comments_normally))
     context = {
         "page_title": f"{story.title}",
         "story": story,
-        # "story_comments": story_comments,
+        "story_comments": story_comments,
     }
     return render(request, "news/detail.html", context)
 
